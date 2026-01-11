@@ -2,9 +2,19 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <style>
-        .h0{
+        :root {
+            --primary-color: rgb(45, 140, 255);
+            --bg-dark: rgb(50, 50, 50);
+            --text-glow: 0 0 10px rgba(45, 140, 255, 0.5);
+        }
+        
+        * {
+            box-sizing: border-box;
+        }
+        
+        .h0 {
             display: flex;
             width: 100%;
             height: 60px;
@@ -12,279 +22,673 @@
             background-color: black;
             text-shadow: 3px -3px 1.5px rgba(45, 140, 255, 0.5);
             padding: 0 20px;
-            box-sizing: border-box;
         }
-        .button0{
-            font-size: 25px;
+        
+        .button0 {
+            font-size: 18px;
             background-color: rgba(0,0,0,0);
-            border-color: rgb(45, 140, 255);
-            border-style: solid;
-            border-radius: 60px;
-            color: rgb(45, 140, 255);
+            border: 2px solid var(--primary-color);
+            border-radius: 30px;
+            color: var(--primary-color);
             box-shadow: 3px -3px 1.5px rgba(45, 140, 255, 0.5);
             text-shadow: 3px -3px 1.5px rgba(45, 140, 255, 0.5);
-            padding: 5px 20px;
+            padding: 8px 25px;
             cursor: pointer;
+            transition: all 0.2s;
+            min-width: 120px;
+            text-align: center;
         }
+        
         .button0:active {
             border-color: rgb(45, 90, 255);
             color: rgb(45, 90, 255);
-            transform: scale(0.99);
+            transform: scale(0.95);
         }
-        body{
+        
+        body {
             margin: 0;
             padding: 0;
-            background-color: rgb(50, 50, 50);
-            height: 100vh;
-            overflow: auto;
-            padding-bottom: 20px;
+            background-color: var(--bg-dark);
+            min-height: 100vh;
             font-family: Arial, sans-serif;
+            padding-bottom: 30px;
         }
+        
+        .device-pc .title-text { font-size: 28px; }
+        .device-tablet .title-text { font-size: 24px; }
+        .device-mobile .title-text { font-size: 20px; }
+        
         .login-modal {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0,0,0,0.7);
+            background-color: rgba(0,0,0,0.85);
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 9998;
         }
+        
         .login-box {
-            width: 400px;
-            background-color: rgb(0, 0, 0);
+            width: 90%;
+            max-width: 400px;
+            background-color: rgb(20, 20, 20);
             margin: auto;
-            padding: 30px;
+            padding: 25px;
             border-radius: 10px;
-            box-shadow: 0 0 60px rgba(45, 140, 255, 1);
+            box-shadow: 0 0 40px rgba(45, 140, 255, 0.8);
+            border: 1px solid var(--primary-color);
         }
+        
         .login-title {
-            color: rgb(45, 140, 255);
+            color: var(--primary-color);
             text-align: center;
-            font-size: 24px;
-            margin-bottom: 20px;
-            text-shadow: 0 0 10px rgb(45, 140, 255);
+            font-size: 22px;
+            margin-right: 25px;
+            margin-bottom:20px;
+            text-shadow: var(--text-glow);
         }
+        
         .register-tip {
-            color: rgb(45, 140, 255);
+            color: var(--primary-color);
             font-size: 14px;
             text-align: center;
             margin-bottom: 15px;
             opacity: 0.8;
         }
+        
         .login-input {
             width: 100%;
-            padding: 12px 15px;
+            padding: 14px;
             margin: 10px 0;
-            border: 1px solid rgb(45, 140, 255);
-            border-radius: 5px;
-            background-color: #444;
+            border: 1px solid var(--primary-color);
+            border-radius: 8px;
+            background-color: #333;
             color: white;
             font-size: 16px;
-            box-sizing: border-box;
         }
+        
         .login-input:focus {
             outline: none;
             border-color: rgb(45, 90, 255);
-            box-shadow: inset 0 0 8px rgba(45, 140, 255, 0.3);
+            box-shadow: inset 0 0 10px rgba(45, 140, 255, 0.4);
         }
+        
         .login-btn {
             width: 100%;
-            padding: 12px;
-            background-color: rgb(45, 140, 255);
+            padding: 14px;
+            background-color: var(--primary-color);
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
             font-size: 18px;
             cursor: pointer;
             margin-top: 15px;
             box-shadow: 0 0 15px rgba(45, 140, 255, 0.5);
+            transition: all 0.2s;
         }
+        
         .login-btn:active {
             background-color: rgb(45, 90, 255);
-            transform: scale(0.98);
+            transform: scale(0.97);
         }
+        
         .close-btn {
             width: 30px;
             height: 30px;
-            background-color: rgb(50, 50, 50);
+            background-color: #333;
             text-align: center;
             color: #999;
             cursor: pointer;
-            font-size: 20px;
+            font-size: 22px;
             margin-bottom: 10px;
             border-radius: 50%;
             line-height: 30px;
+            float: left;
         }
-        .close-btn:hover {
-            color: rgb(45, 140, 255);
+        
+        .close-btn:active {
+            color: var(--primary-color);
             box-shadow: 0 0 10px rgba(45, 140, 255, 0.5);
         }
-        .user-name {
-            font-size: 25px;
-            color: rgb(45, 140, 255);
-            margin-right: 20px;
+        
+        .user-area {
+            margin-left: auto;
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 10px;
         }
+        
+        .device-pc .user-name { font-size: 18px; }
+        .device-tablet .user-name { font-size: 16px; }
+        .device-mobile .user-name { font-size: 14px; }
+        
+        .user-name {
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
         .logout-btn {
-            font-size: 20px;
-            padding: 3px 15px;
+            padding: 6px 20px;
         }
-        .hello0{
+        
+        .hello0 {
             width: 100%;
-            padding: 20px 0;
+            padding: 20px 0 10px 0;
             text-align: center;
-            color: rgb(45, 140, 255);
-            font-size: 30px;
+            color: var(--primary-color);
             text-shadow: 0 0 20px rgba(45, 140, 255, 0.6);
         }
+        
+        .device-pc .hello0 { font-size: 28px; }
+        .device-tablet .hello0 { font-size: 24px; }
+        .device-mobile .hello0 { font-size: 22px; }
+        
+        /* 搜索和语言选择区域 */
+        .search-language-area {
+            max-width: 800px;
+            margin: 0 auto 25px auto;
+            padding: 0 20px;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--primary-color);
+            border-radius: 8px;
+            background-color: #333;
+            color: white;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: rgb(45, 90, 255);
+            box-shadow: inset 0 0 10px rgba(45, 140, 255, 0.4);
+        }
+        
+        .language-select {
+            min-width: 180px;
+        }
+        
+        .language-select select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--primary-color);
+            border-radius: 8px;
+            background-color: #333;
+            color: white;
+            font-size: 16px;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+        
+        .language-select select:focus {
+            outline: none;
+            border-color: rgb(45, 90, 255);
+            box-shadow: inset 0 0 10px rgba(45, 140, 255, 0.4);
+        }
+        
         .tip-box {
             position: fixed;
-            top: 80px;
+            top: 100px;
             left: 50%;
             transform: translateX(-50%);
-            padding: 10px 20px;
-            background-color: rgba(0,0,0,0.8);
-            color: rgb(45, 140, 255);
-            border-radius: 5px;
-            font-size: 18px;
+            padding: 12px 24px;
+            background-color: rgba(0,0,0,0.9);
+            color: var(--primary-color);
+            border-radius: 8px;
+            font-size: 16px;
             z-index: 9999;
-            box-shadow: 0 0 15px rgba(45, 140, 255, 0.5);
+            box-shadow: 0 0 20px rgba(45, 140, 255, 0.6);
             opacity: 0;
             transition: opacity 0.3s ease;
+            border: 1px solid var(--primary-color);
+            max-width: 90%;
+            text-align: center;
         }
+        
         .tip-box.show {
             opacity: 1;
         }
+        
         .function-area {
             max-width: 800px;
-            margin: 20px auto;
+            margin: 0 auto;
             padding: 0 20px;
         }
+        
         .function-title {
-            color: rgb(45, 140, 255);
-            font-size: 28px;
-            margin-bottom: 20px;
-            text-shadow: 0 0 10px rgba(45, 140, 255, 0.5);
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            text-shadow: var(--text-glow);
         }
+        
+        .device-pc .function-title { font-size: 24px; }
+        .device-tablet .function-title { font-size: 22px; }
+        .device-mobile .function-title { font-size: 20px; }
+        
+        /* 新布局：上方输入框，下方按钮 */
         .function-item {
-            display: flex;
-            align-items: center;
-            min-height: 40px;
-            background-color: rgba(0,0,0,0.5);
+            background-color: rgba(0,0,0,0.4);
             padding: 20px;
             border-radius: 10px;
-            margin-bottom: 10px;
-            border: 5px solid rgba(45, 140, 255, 0.3);
+            margin-bottom: 20px;
+            border: 2px solid rgba(45, 140, 255, 0.3);
             box-shadow: 0 0 15px rgba(45, 140, 255, 0.2);
         }
-        .url-input {
-            width: calc(100% - 120px);
-            padding: 10px 15px;
-            border: 1px solid rgb(45, 140, 255);
-            border-radius: 5px;
-            background-color: #444;
+        
+        .device-mobile .function-item {
+            padding: 15px;
+        }
+        
+        .input-row {
+            width: 100%;
+            margin-bottom: 15px;
+        }
+        
+        .input-row input,
+        .input-row textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--primary-color);
+            border-radius: 8px;
+            background-color: #333;
             color: white;
             font-size: 16px;
-            box-sizing: border-box;
-            margin-right: 10px;
         }
-        .calc-input {
-            width: calc(100% - 120px);
-            padding: 10px 15px;
-            border: 1px solid rgb(45, 140, 255);
-            border-radius: 5px;
-            background-color: #444;
-            color: white;
-            font-size: 16px;
-            box-sizing: border-box;
-            margin-right: 10px;
+        
+        .input-row textarea {
+            min-height: 100px;
+            resize: vertical;
+            font-family: Arial, sans-serif;
         }
-        .url-input:focus, .calc-input:focus {
+        
+        .input-row input:focus,
+        .input-row textarea:focus {
             outline: none;
             border-color: rgb(45, 90, 255);
-            box-shadow: inset 0 0 8px rgba(45, 140, 255, 0.3);
+            box-shadow: inset 0 0 10px rgba(45, 140, 255, 0.3);
         }
-        .open-btn, .calc-btn {
-            padding: 10px 10px;
-            background-color: rgb(45, 140, 255);
+        
+        .button-row {
+            width: 100%;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .function-btn {
+            padding: 12px 24px;
+            background-color: var(--primary-color);
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
             font-size: 16px;
             cursor: pointer;
             box-shadow: 0 0 10px rgba(45, 140, 255, 0.4);
+            transition: all 0.2s;
+            flex: 1;
+            min-width: 140px;
+            text-align: center;
         }
-        .open-btn:active, .calc-btn:active {
+        
+        .device-mobile .function-btn {
+            min-width: 100%;
+        }
+        
+        .function-btn:active {
             background-color: rgb(45, 90, 255);
-            transform: scale(0.98);
+            transform: scale(0.97);
         }
+        
+        .copy-btn {
+            background-color: rgba(60, 200, 100, 0.8) !important;
+        }
+        
+        .copy-btn:active {
+            background-color: rgba(30, 180, 70, 0.9) !important;
+        }
+        
         .function-item.disabled {
             opacity: 0.5;
             pointer-events: none;
         }
+        
         .disabled-tip {
-            color: rgb(45, 140, 255);
-            font-size: 16px;
-            text-align: center;
-            margin-top: 10px;
-            margin-bottom: 20px;
-            opacity: 0.8;
-        }
-        .activation-info {
-            color: rgb(45, 140, 255);
+            color: var(--primary-color);
             font-size: 14px;
             text-align: center;
-            margin-top: 10px;
+            margin: 5px 0 20px 0;
+            opacity: 0.8;
+        }
+        
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(45, 140, 255, 0.5), 
+                transparent);
+            margin: 25px 0;
+            border: none;
+        }
+        
+        .notes-list {
+            max-height: 200px;
+            overflow-y: auto;
+            margin-top: 15px;
+            padding-right: 5px;
+        }
+        
+        .note-item {
+            background-color: rgba(45, 140, 255, 0.1);
+            padding: 12px;
+            margin-bottom: 8px;
+            border-radius: 6px;
+            border-left: 3px solid var(--primary-color);
+        }
+        
+        .note-text {
+            color: white;
+            font-size: 15px;
+            margin-bottom: 5px;
+            word-break: break-word;
+        }
+        
+        .note-time {
+            color: var(--primary-color);
+            font-size: 12px;
             opacity: 0.7;
+        }
+        
+        .time-display {
+            color: var(--primary-color);
+            font-family: 'Courier New', monospace;
+            margin-bottom: 15px;
+            text-shadow: var(--text-glow);
+            text-align: center;
+            padding: 10px;
+            background-color: rgba(0,0,0,0.3);
+            border-radius: 8px;
+            border: 1px solid rgba(45, 140, 255, 0.2);
+        }
+        
+        .device-pc .time-display { font-size: 20px; }
+        .device-tablet .time-display { font-size: 18px; }
+        .device-mobile .time-display { font-size: 16px; }
+        
+        .activation-info {
+            color: var(--primary-color);
+            font-size: 14px;
+            text-align: center;
+            margin-top: 20px;
+            opacity: 0.8;
         }
     </style>
 </head>
 <body>
     <div class="h0">
-        <div style="color: rgb(45, 140, 255);font-size: 30px;">欢迎打开此网站</div>
-        <div style="margin-left: auto" id="user-area">
+        <div class="title-text" style="color: var(--primary-color);">欢迎打开此网站</div>
+        <div class="user-area" id="user-area">
             <button class="button0" onclick="createLoginUI()">激活码</button>
         </div>
     </div>
+    
     <div class="hello0" id="hello">请先输入激活码</div>
+    
+    <!-- 搜索和语言选择区域 -->
+    <div class="search-language-area">
+        <div class="search-box">
+            <input type="text" class="search-input" id="searchInput" placeholder="请输入要搜索功能的名称或编号">
+        </div>
+        <div class="language-select">
+            <select id="languageSelect">
+                <option value="zh-CN">简体中文</option>
+                <option value="zh-TW">繁體中文</option>
+                <option value="en">English</option>
+            </select>
+        </div>
+    </div>
     
     <div class="function-area">
         <h2 class="function-title">此网站功能:</h2>
+        
+        <!-- 1. 网站打开器 -->
         <div>
-            <h3 class="function-title" style="font-size: 24px;">1.网站打开器</h3>
+            <h3 class="function-title" style="font-size: 20px;">1. 网站打开器</h3>
             <div class="function-item" id="websiteOpener">
-                <input type="url" class="url-input" id="urlInput" placeholder="请输入网址（如：example.com）">
-                <button class="open-btn" onclick="openWebsite()">打开此网站</button>
+                <div class="input-row">
+                    <input type="url" id="urlInput" placeholder="请输入网址（如：example.com）">
+                </div>
+                <div class="button-row">
+                    <button class="function-btn" onclick="openWebsite()">打开此网站</button>
+                </div>
             </div>
             <div class="disabled-tip" id="openerTip">请先输入激活码后使用此功能</div>
         </div>
+        
+        <hr class="section-divider">
+        
+        <!-- 2. 安全计算器 -->
         <div>
-            <h3 class="function-title" style="font-size: 24px;">2.计算器</h3>
+            <h3 class="function-title" style="font-size: 20px;">2. 安全计算器</h3>
             <div class="function-item" id="calculator">
-                <input type="text" class="calc-input" id="calcInput" placeholder="请输入计算式（如：1+2*3）">
-                <button class="calc-btn" onclick="calculate()">计算</button>
+                <div class="input-row">
+                    <input type="text" id="calcInput" placeholder="请输入计算式（如：1+2*3）">
+                </div>
+                <div class="button-row">
+                    <button class="function-btn" onclick="safeCalculate()">计算</button>
+                </div>
             </div>
             <div class="disabled-tip" id="calcTip">请先输入激活码后使用此功能</div>
         </div>
+        
+        <hr class="section-divider">
+        
+        <!-- 3. 记事本 -->
+        <div>
+            <h3 class="function-title" style="font-size: 20px;">3. 记事本</h3>
+            <div class="function-item" id="notesSection">
+                <div class="input-row">
+                    <textarea id="noteInput" placeholder="请输入记事内容..."></textarea>
+                </div>
+                <div class="button-row">
+                    <button class="function-btn" onclick="addNote()">添加记事</button>
+                </div>
+                <div class="notes-list" id="notesList"></div>
+            </div>
+            <div class="disabled-tip" id="notesTip">请先输入激活码后使用此功能</div>
+        </div>
+        
+        <hr class="section-divider">
+        
+        <!-- 4. 当前时间 -->
+        <div>
+            <h3 class="function-title" style="font-size: 20px;">4. 当前时间</h3>
+            <div class="function-item" id="timeSection">
+                <div class="input-row">
+                    <div class="time-display" id="currentTime">-- 年 -- 月 -- 日 --:--:--</div>
+                </div>
+                <div class="button-row">
+                    <button class="function-btn copy-btn" onclick="copyTime()">复制时间</button>
+                </div>
+            </div>
+            <div class="disabled-tip" id="timeTip">请先输入激活码后使用此功能</div>
+        </div>
+        
         <div class="activation-info" id="activationInfo"></div>
     </div>
 
     <div class="tip-box" id="tipBox"></div>
 
     <script>
-        // 激活码配置
+        // 多语言文本
+        const translations = {
+            'zh-CN': {
+                welcome: "欢迎打开此网站",
+                helloGuest: "请先输入激活码",
+                helloUser: "你好，已激活用户",
+                activationCode: "激活码",
+                logout: "退出激活",
+                searchPlaceholder: "请输入要搜索功能的名称或编号",
+                functions: "此网站功能:",
+                websiteOpener: "网站打开器",
+                websiteOpenerPlaceholder: "请输入网址（如：example.com）",
+                openWebsite: "打开此网站",
+                calculator: "安全计算器",
+                calculatorPlaceholder: "请输入计算式（如：1+2*3）",
+                calculate: "计算",
+                notepad: "记事本",
+                notepadPlaceholder: "请输入记事内容...",
+                addNote: "添加记事",
+                currentTime: "当前时间",
+                copyTime: "复制时间",
+                disabledTip: "请先输入激活码后使用此功能",
+                activationStatus: "激活状态：有效",
+                daysLeft: "有效期剩余：{{days}}天",
+                expired: "激活状态：已过期，请重新激活",
+                enterCode: "请输入激活码",
+                wrongCode: "激活码错误，请重新输入",
+                success: "激活码验证成功，欢迎使用",
+                logoutSuccess: "已退出激活状态",
+                logoutConfirm: "确定要退出激活吗？",
+                expiredTip: "激活码已过期，请重新激活",
+                enterUrl: "请输入有效的网址",
+                onlyHttp: "只支持HTTP和HTTPS协议",
+                urlOpened: "网站已在新标签页打开",
+                invalidUrl: "网址格式不正确，请检查",
+                enterExpression: "请输入计算式",
+                invalidChars: "包含非法字符",
+                calculationError: "计算式格式错误，请检查",
+                result: "计算结果：",
+                zeroDivision: "除数不能为零",
+                enterNote: "请输入记事内容",
+                noteAdded: "记事添加成功",
+                timeCopied: "时间已复制到剪贴板",
+                functionSearch: "功能搜索"
+            },
+            'zh-TW': {
+                welcome: "歡迎打開此網站",
+                helloGuest: "請先輸入激活碼",
+                helloUser: "你好，已激活用戶",
+                activationCode: "激活碼",
+                logout: "退出激活",
+                searchPlaceholder: "請輸入要搜索功能的名稱或編號",
+                functions: "此網站功能:",
+                websiteOpener: "網站打開器",
+                websiteOpenerPlaceholder: "請輸入網址（如：example.com）",
+                openWebsite: "打開此網站",
+                calculator: "安全計算器",
+                calculatorPlaceholder: "請輸入計算式（如：1+2*3）",
+                calculate: "計算",
+                notepad: "記事本",
+                notepadPlaceholder: "請輸入記事內容...",
+                addNote: "添加記事",
+                currentTime: "當前時間",
+                copyTime: "複製時間",
+                disabledTip: "請先輸入激活碼後使用此功能",
+                activationStatus: "激活狀態：有效",
+                daysLeft: "有效期剩餘：{{days}}天",
+                expired: "激活狀態：已過期，請重新激活",
+                enterCode: "請輸入激活碼",
+                wrongCode: "激活碼錯誤，請重新輸入",
+                success: "激活碼驗證成功，歡迎使用",
+                logoutSuccess: "已退出激活狀態",
+                logoutConfirm: "確定要退出激活嗎？",
+                expiredTip: "激活碼已過期，請重新激活",
+                enterUrl: "請輸入有效的網址",
+                onlyHttp: "只支援HTTP和HTTPS協議",
+                urlOpened: "網站已在新標籤頁打開",
+                invalidUrl: "網址格式不正確，請檢查",
+                enterExpression: "請輸入計算式",
+                invalidChars: "包含非法字符",
+                calculationError: "計算式格式錯誤，請檢查",
+                result: "計算結果：",
+                zeroDivision: "除數不能為零",
+                enterNote: "請輸入記事內容",
+                noteAdded: "記事添加成功",
+                timeCopied: "時間已複製到剪貼板",
+                functionSearch: "功能搜索"
+            },
+            'en': {
+                welcome: "Welcome to this website",
+                helloGuest: "Please enter activation code first",
+                helloUser: "Hello, activated user",
+                activationCode: "Activation Code",
+                logout: "Logout",
+                searchPlaceholder: "Enter function name or number to search",
+                functions: "Website Functions:",
+                websiteOpener: "Website Opener",
+                websiteOpenerPlaceholder: "Enter URL (e.g., example.com)",
+                openWebsite: "Open Website",
+                calculator: "Secure Calculator",
+                calculatorPlaceholder: "Enter expression (e.g., 1+2*3)",
+                calculate: "Calculate",
+                notepad: "Notepad",
+                notepadPlaceholder: "Enter note content...",
+                addNote: "Add Note",
+                currentTime: "Current Time",
+                copyTime: "Copy Time",
+                disabledTip: "Please enter activation code first to use this function",
+                activationStatus: "Activation Status: Active",
+                daysLeft: "Days Left: {{days}} days",
+                expired: "Activation Status: Expired, please reactivate",
+                enterCode: "Please enter activation code",
+                wrongCode: "Wrong activation code, please try again",
+                success: "Activation code verified successfully, welcome",
+                logoutSuccess: "Logged out successfully",
+                logoutConfirm: "Are you sure you want to logout?",
+                expiredTip: "Activation code expired, please reactivate",
+                enterUrl: "Please enter a valid URL",
+                onlyHttp: "Only HTTP and HTTPS protocols are supported",
+                urlOpened: "Website opened in new tab",
+                invalidUrl: "Invalid URL format, please check",
+                enterExpression: "Please enter calculation expression",
+                invalidChars: "Contains invalid characters",
+                calculationError: "Calculation expression error, please check",
+                result: "Result: ",
+                zeroDivision: "Cannot divide by zero",
+                enterNote: "Please enter note content",
+                noteAdded: "Note added successfully",
+                timeCopied: "Time copied to clipboard",
+                functionSearch: "Function Search"
+            }
+        };
+
         const VALID_ACTIVE_CODE = "LdH440903201312210914565557";
         const STORAGE_KEY = 'website_activation';
-        const ACTIVATION_EXPIRE_DAYS = 30; // 激活码有效期30天
+        const NOTES_KEY = 'website_notes';
+        const ACTIVATION_EXPIRE_DAYS = 30;
         
         let isLoggedIn = false;
+        let deviceType = 'pc';
+        let timeUpdateInterval = null;
+        let currentLanguage = 'zh-CN';
 
-        // 显示提示信息
+        function detectDevice() {
+            const width = window.innerWidth;
+            if (width < 768) {
+                deviceType = 'mobile';
+            } else if (width < 1024) {
+                deviceType = 'tablet';
+            } else {
+                deviceType = 'pc';
+            }
+            document.body.className = `device-${deviceType}`;
+        }
+
         function showTip(text) {
             const tipBox = document.getElementById('tipBox');
             tipBox.textContent = text;
@@ -294,261 +698,425 @@
             }, 2000);
         }
 
-        // 创建激活码输入界面
-        function createLoginUI() {
-            if (document.querySelector('.login-modal')) {
-                return;
+        function translate(key, params = {}) {
+            let text = translations[currentLanguage][key] || translations['zh-CN'][key] || key;
+            for (const [paramKey, paramValue] of Object.entries(params)) {
+                text = text.replace(`{{${paramKey}}}`, paramValue);
             }
+            return text;
+        }
+
+        function updateUIForLanguage() {
+            document.querySelector('.title-text').textContent = translate('welcome');
+            document.getElementById('hello').textContent = isLoggedIn ? translate('helloUser') : translate('helloGuest');
+            document.querySelector('.search-input').placeholder = translate('searchPlaceholder');
+            document.querySelector('.function-title').textContent = translate('functions');
+            
+            const functionTitles = document.querySelectorAll('.function-title[style*="font-size: 20px"]');
+            const titles = [translate('websiteOpener'), translate('calculator'), translate('notepad'), translate('currentTime')];
+            functionTitles.forEach((title, index) => {
+                title.textContent = `${index + 1}. ${titles[index]}`;
+            });
+            
+            document.getElementById('urlInput').placeholder = translate('websiteOpenerPlaceholder');
+            document.querySelector('#websiteOpener .function-btn').textContent = translate('openWebsite');
+            document.getElementById('calcInput').placeholder = translate('calculatorPlaceholder');
+            document.querySelector('#calculator .function-btn').textContent = translate('calculate');
+            document.getElementById('noteInput').placeholder = translate('notepadPlaceholder');
+            document.querySelector('#notesSection .function-btn').textContent = translate('addNote');
+            document.querySelector('#timeSection .function-btn').textContent = translate('copyTime');
+            
+            const disabledTips = ['openerTip', 'calcTip', 'notesTip', 'timeTip'];
+            disabledTips.forEach(tipId => {
+                document.getElementById(tipId).textContent = translate('disabledTip');
+            });
+            
+            updateUserInterface(); // 调用更新右上角按钮
+            updateActivationInfo();
+        }
+
+        function createLoginUI() {
+            if (document.querySelector('.login-modal')) return;
             const modal = document.createElement('div');
             modal.className = 'login-modal';
             const loginBox = document.createElement('div');
             loginBox.className = 'login-box';
             loginBox.innerHTML = `
                 <div class="close-btn" onclick="this.parentElement.parentElement.remove()">×</div>
-                <div class="login-title">输入激活码</div>
-                <div class="register-tip">请输入指定的激活码</div>
-                <input type="text" class="login-input" id="activeCodeInput" placeholder="请输入激活码" onkeydown="if(event.key == 'Enter') checkActiveCode()">
-                <button class="login-btn" onclick="checkActiveCode()">验证激活码</button>
+                <div class="login-title">${translate('enterCode')}</div>
+                <input type="text" class="login-input" id="activeCodeInput" placeholder="${translate('enterCode')}" onkeydown="if(event.key == 'Enter') checkActiveCode()">
+                <button class="login-btn" onclick="checkActiveCode()">${translate('enterCode')}</button>
             `;
             modal.appendChild(loginBox);
             document.body.appendChild(modal);
+            document.getElementById('activeCodeInput').focus();
         }
 
-        // 检查激活码
         function checkActiveCode() {
             const inputCode = document.getElementById('activeCodeInput').value.trim();
-            
             if (!inputCode) {
-                showTip('请输入激活码！');
+                showTip(translate('enterCode'));
                 return;
             }
-            
             if (inputCode !== VALID_ACTIVE_CODE) {
-                showTip('激活码错误，请重新输入！');
+                showTip(translate('wrongCode'));
                 return;
             }
-            
-            // 保存激活状态到本地存储
             const activationData = {
                 isActivated: true,
                 activationDate: new Date().toISOString(),
                 expiryDate: new Date(Date.now() + ACTIVATION_EXPIRE_DAYS * 24 * 60 * 60 * 1000).toISOString()
             };
-            
             localStorage.setItem(STORAGE_KEY, JSON.stringify(activationData));
-            
             const modal = document.querySelector('.login-modal');
-            if (modal) {
-                modal.remove();
-                showTip('激活码验证成功，欢迎使用！');
-            }
-
-            // 激活功能
+            if (modal) modal.remove();
+            showTip(translate('success'));
             activateFeatures();
         }
 
-        // 激活功能
         function activateFeatures() {
             isLoggedIn = true;
-            const websiteOpener = document.getElementById('websiteOpener');
-            websiteOpener.classList.remove('disabled');
+            document.getElementById('websiteOpener').classList.remove('disabled');
             document.getElementById('openerTip').style.display = 'none';
-            
-            const calculator = document.getElementById('calculator');
-            calculator.classList.remove('disabled');
+            document.getElementById('calculator').classList.remove('disabled');
             document.getElementById('calcTip').style.display = 'none';
-
-            // 更新用户界面
+            document.getElementById('notesSection').classList.remove('disabled');
+            document.getElementById('notesTip').style.display = 'none';
+            document.getElementById('timeSection').classList.remove('disabled');
+            document.getElementById('timeTip').style.display = 'none';
             updateUserInterface();
-            
-            // 更新激活信息显示
             updateActivationInfo();
+            loadNotes();
+            startTimeUpdate();
         }
 
-        // 更新用户界面
         function updateUserInterface() {
             const userArea = document.getElementById('user-area');
-            userArea.innerHTML = `
-                <div class="user-name">
-                    当前状态：已激活
-                    <button class="button0 logout-btn" onclick="logout()">退出激活</button>
-                </div>
-            `;
-            
-            const Hello = document.getElementById('hello');
-            Hello.innerHTML = '你好，已激活用户';
+            if (isLoggedIn) {
+                userArea.innerHTML = `
+                    <button class="button0 logout-btn" onclick="confirmLogout()">${translate('logout')}</button>
+                `;
+            } else {
+                userArea.innerHTML = `
+                    <button class="button0" onclick="createLoginUI()">${translate('activationCode')}</button>
+                `;
+            }
+            document.getElementById('hello').innerHTML = isLoggedIn ? translate('helloUser') : translate('helloGuest');
         }
 
-        // 更新激活信息显示
+        function confirmLogout() {
+            if (confirm(translate('logoutConfirm'))) {
+                logout();
+            }
+        }
+
         function updateActivationInfo() {
             const activationData = getActivationData();
             if (activationData && activationData.isActivated) {
                 const expiryDate = new Date(activationData.expiryDate);
                 const daysLeft = Math.ceil((expiryDate - new Date()) / (1000 * 60 * 60 * 24));
-                
                 const activationInfo = document.getElementById('activationInfo');
                 if (daysLeft > 0) {
-                    activationInfo.innerHTML = `激活状态：有效 | 有效期剩余：${daysLeft}天`;
+                    activationInfo.innerHTML = `${translate('activationStatus')} | ${translate('daysLeft', {days: daysLeft})}`;
                 } else {
-                    activationInfo.innerHTML = `激活状态：已过期，请重新激活`;
-                    logout(); // 自动退出激活状态
+                    activationInfo.innerHTML = translate('expired');
+                    logout();
                 }
             }
         }
 
-        // 获取激活数据
         function getActivationData() {
             try {
                 const data = localStorage.getItem(STORAGE_KEY);
                 return data ? JSON.parse(data) : null;
-            } catch (e) {
+            } catch {
                 return null;
             }
         }
 
-        // 检查激活状态
         function checkActivationStatus() {
             const activationData = getActivationData();
-            
             if (activationData && activationData.isActivated) {
-                // 检查是否过期
                 const expiryDate = new Date(activationData.expiryDate);
                 if (new Date() < expiryDate) {
-                    // 未过期，自动激活
                     activateFeatures();
                     return true;
                 } else {
-                    // 已过期，清除激活状态
                     localStorage.removeItem(STORAGE_KEY);
-                    showTip('激活码已过期，请重新激活！');
+                    showTip(translate('expiredTip'));
                     return false;
                 }
             }
             return false;
         }
 
-        // 退出激活
         function logout() {
             localStorage.removeItem(STORAGE_KEY);
             isLoggedIn = false;
-            
-            const websiteOpener = document.getElementById('websiteOpener');
-            websiteOpener.classList.add('disabled');
+            document.getElementById('websiteOpener').classList.add('disabled');
             document.getElementById('openerTip').style.display = 'block';
-            
-            const calculator = document.getElementById('calculator');
-            calculator.classList.add('disabled');
+            document.getElementById('calculator').classList.add('disabled');
             document.getElementById('calcTip').style.display = 'block';
-
-            const userArea = document.getElementById('user-area');
-            userArea.innerHTML = `<button class="button0" onclick="createLoginUI()">激活码</button>`;
+            document.getElementById('notesSection').classList.add('disabled');
+            document.getElementById('notesTip').style.display = 'block';
+            document.getElementById('timeSection').classList.add('disabled');
+            document.getElementById('timeTip').style.display = 'block';
             
-            const Hello = document.getElementById('hello');
-            Hello.innerHTML = '请先输入激活码';
+            updateUserInterface(); // 调用更新右上角按钮
             
-            const activationInfo = document.getElementById('activationInfo');
-            activationInfo.innerHTML = '';
-            
-            showTip('已退出激活状态！');
+            if (timeUpdateInterval) {
+                clearInterval(timeUpdateInterval);
+                timeUpdateInterval = null;
+            }
+            document.getElementById('currentTime').textContent = '-- 年 -- 月 -- 日 --:--:--';
+            showTip(translate('logoutSuccess'));
         }
 
-        // 网站打开器功能
         function openWebsite() {
             if (!isLoggedIn) {
-                showTip('请先输入激活码后使用此功能！');
+                showTip(translate('disabledTip'));
                 createLoginUI();
                 return;
             }
-
             const url = document.getElementById('urlInput').value.trim();
             if (!url) {
-                showTip('请输入有效的网址！');
+                showTip(translate('enterUrl'));
                 return;
             }
-            
             try {
                 const fullUrl = url.startsWith('http') ? url : `https://${url}`;
                 const urlObj = new URL(fullUrl);
-                
                 if (!['http:', 'https:'].includes(urlObj.protocol)) {
-                    showTip('只支持HTTP和HTTPS协议！');
+                    showTip(translate('onlyHttp'));
                     return;
                 }
-                
                 window.open(urlObj.href, '_blank', 'noopener,noreferrer');
-                showTip('网站已在新标签页打开！');
+                showTip(translate('urlOpened'));
                 document.getElementById('urlInput').value = '';
-            } catch (e) {
-                showTip('网址格式不正确，请检查！');
+            } catch {
+                showTip(translate('invalidUrl'));
             }
         }
 
-        // 计算器功能（安全版本）
-        function calculate() {
+        function safeCalculate() {
             if (!isLoggedIn) {
-                showTip('请先输入激活码后使用此功能！');
+                showTip(translate('disabledTip'));
                 createLoginUI();
                 return;
             }
-
             const calcStr = document.getElementById('calcInput').value.trim();
             if (!calcStr) {
-                showTip('请输入计算式！');
+                showTip(translate('enterExpression'));
                 return;
             }
-
+            const tokens = calcStr.match(/(\d+(?:\.\d+)?|[+\-*/()])/g);
+            if (!tokens || tokens.join('') !== calcStr.replace(/\s+/g, '')) {
+                showTip(translate('invalidChars'));
+                return;
+            }
             try {
-                // 安全计算函数
-                function safeCalculate(expression) {
-                    // 只允许数字、基本运算符和括号
-                    const sanitized = expression.replace(/[^\d+\-*/().\s]/g, '');
-                    
-                    // 简单的验证
-                    if (!/^[\d+\-*/().\s]+$/.test(expression)) {
-                        throw new Error('包含非法字符');
-                    }
-                    
-                    // 使用Function构造器（比eval稍安全）
-                    try {
-                        const result = new Function('return ' + sanitized)();
-                        return result;
-                    } catch (e) {
-                        throw new Error('计算表达式错误');
-                    }
-                }
-                
-                const result = safeCalculate(calcStr);
-                showTip(`计算结果：${result}`);
+                const result = evaluateExpression(tokens);
+                showTip(`${translate('result')}${result}`);
                 document.getElementById('calcInput').value = '';
-            } catch (e) {
-                showTip('计算式格式错误，请检查！');
+            } catch {
+                showTip(translate('calculationError'));
             }
         }
 
-        // 页面加载时初始化
+        function evaluateExpression(tokens) {
+            const values = [];
+            const ops = [];
+            
+            for (let i = 0; i < tokens.length; i++) {
+                if (!isNaN(tokens[i])) {
+                    values.push(parseFloat(tokens[i]));
+                } else if (tokens[i] === '(') {
+                    ops.push(tokens[i]);
+                } else if (tokens[i] === ')') {
+                    while (ops.length && ops[ops.length - 1] !== '(') {
+                        values.push(applyOp(ops.pop(), values.pop(), values.pop()));
+                    }
+                    ops.pop();
+                } else if (isOperator(tokens[i])) {
+                    while (ops.length && hasPrecedence(tokens[i], ops[ops.length - 1])) {
+                        values.push(applyOp(ops.pop(), values.pop(), values.pop()));
+                    }
+                    ops.push(tokens[i]);
+                }
+            }
+            
+            while (ops.length) {
+                values.push(applyOp(ops.pop(), values.pop(), values.pop()));
+            }
+            
+            return values.pop();
+        }
+
+        function isOperator(c) {
+            return ['+', '-', '*', '/'].includes(c);
+        }
+
+        function hasPrecedence(op1, op2) {
+            if (op2 === '(' || op2 === ')') return false;
+            if ((op1 === '*' || op1 === '/') && (op2 === '+' || op2 === '-')) return false;
+            return true;
+        }
+
+        function applyOp(op, b, a) {
+            switch (op) {
+                case '+': return a + b;
+                case '-': return a - b;
+                case '*': return a * b;
+                case '/': 
+                    if (b === 0) {
+                        showTip(translate('zeroDivision'));
+                        return 0;
+                    }
+                    return a / b;
+                default: return 0;
+            }
+        }
+
+        function addNote() {
+            if (!isLoggedIn) {
+                showTip(translate('disabledTip'));
+                createLoginUI();
+                return;
+            }
+            const noteInput = document.getElementById('noteInput');
+            const noteText = noteInput.value.trim();
+            if (!noteText) {
+                showTip(translate('enterNote'));
+                return;
+            }
+            const notes = JSON.parse(localStorage.getItem(NOTES_KEY) || '[]');
+            const note = {
+                text: noteText,
+                time: new Date().toLocaleString('zh-CN', {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit',
+                    hour12: false
+                })
+            };
+            notes.push(note);
+            localStorage.setItem(NOTES_KEY, JSON.stringify(notes));
+            noteInput.value = '';
+            loadNotes();
+            showTip(translate('noteAdded'));
+        }
+
+        function loadNotes() {
+            const notesList = document.getElementById('notesList');
+            const notes = JSON.parse(localStorage.getItem(NOTES_KEY) || '[]');
+            notesList.innerHTML = '';
+            notes.forEach(note => {
+                const noteItem = document.createElement('div');
+                noteItem.className = 'note-item';
+                noteItem.innerHTML = `
+                    <div class="note-text">${note.text}</div>
+                    <div class="note-time">${note.time}</div>
+                `;
+                notesList.appendChild(noteItem);
+            });
+        }
+
+        function startTimeUpdate() {
+            updateTime();
+            if (timeUpdateInterval) clearInterval(timeUpdateInterval);
+            timeUpdateInterval = setInterval(updateTime, 1000);
+        }
+
+        function updateTime() {
+            const now = new Date();
+            const timeStr = now.toLocaleString('zh-CN', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false
+            });
+            document.getElementById('currentTime').textContent = timeStr.replace(/\//g, '年')
+                .replace(/\//g, '月')
+                .replace(/ /g, '日 ')
+                .replace(/:/g, ':');
+        }
+
+        function copyTime() {
+            if (!isLoggedIn) {
+                showTip(translate('disabledTip'));
+                createLoginUI();
+                return;
+            }
+            const timeText = document.getElementById('currentTime').textContent;
+            navigator.clipboard.writeText(timeText).then(() => {
+                showTip(translate('timeCopied'));
+            }).catch(() => {
+                const textarea = document.createElement('textarea');
+                textarea.value = timeText;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                showTip(translate('timeCopied'));
+            });
+        }
+
         window.onload = function() {
-            // 初始禁用所有功能
+            detectDevice();
+            window.addEventListener('resize', detectDevice);
+            
             document.getElementById('websiteOpener').classList.add('disabled');
             document.getElementById('calculator').classList.add('disabled');
+            document.getElementById('notesSection').classList.add('disabled');
+            document.getElementById('timeSection').classList.add('disabled');
             
-            // 检查本地存储中的激活状态
-            const isActivated = checkActivationStatus();
+            currentLanguage = localStorage.getItem('preferred_language') || 'zh-CN';
+            document.getElementById('languageSelect').value = currentLanguage;
             
-            // 添加键盘快捷键
+            document.getElementById('languageSelect').addEventListener('change', function(e) {
+                currentLanguage = e.target.value;
+                localStorage.setItem('preferred_language', currentLanguage);
+                updateUIForLanguage();
+            });
+            
+            document.getElementById('searchInput').addEventListener('input', function(e) {
+                const searchTerm = e.target.value.toLowerCase();
+                if (searchTerm) {
+                    document.querySelectorAll('.function-item').forEach(item => {
+                        const title = item.parentElement.querySelector('h3').textContent.toLowerCase();
+                        if (title.includes(searchTerm) || searchTerm === '1' || searchTerm === '2' || searchTerm === '3' || searchTerm === '4') {
+                            item.style.display = 'block';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                } else {
+                    document.querySelectorAll('.function-item').forEach(item => {
+                        item.style.display = 'block';
+                    });
+                }
+            });
+            
+            checkActivationStatus();
+            updateUIForLanguage();
+            
             document.addEventListener('keydown', function(e) {
-                // Ctrl + L 打开激活码输入
                 if (e.ctrlKey && e.key === 'l') {
                     e.preventDefault();
                     createLoginUI();
                 }
-                // Esc 关闭模态框
                 if (e.key === 'Escape') {
                     const modal = document.querySelector('.login-modal');
                     if (modal) modal.remove();
                 }
             });
             
-            // 定期检查激活状态（每分钟检查一次）
             setInterval(checkActivationStatus, 60000);
         }
     </script>
