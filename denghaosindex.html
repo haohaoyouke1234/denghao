@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .h0{
+            display: flex;
+            width: 100%;
+            height: 60px;
+            align-items: center;
+            background-color: black;
+            text-shadow: 3px -3px 1.5px rgba(45, 140, 255, 0.5);
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+        .button0{
+            font-size: 25px;
+            background-color: rgba(0,0,0,0);
+            border-color: rgb(45, 140, 255);
+            border-style: solid;
+            border-radius: 60px;
+            color: rgb(45, 140, 255);
+            box-shadow: 3px -3px 1.5px rgba(45, 140, 255, 0.5);
+            text-shadow: 3px -3px 1.5px rgba(45, 140, 255, 0.5);
+            padding: 5px 20px;
+            cursor: pointer;
+        }
+        .button0:active {
+            border-color: rgb(45, 90, 255);
+            color: rgb(45, 90, 255);
+            transform: scale(0.99);
+        }
+        body{
+            margin: 0;
+            padding: 0;
+            background-color: rgb(50, 50, 50);
+            height: 100vh;
+            overflow: auto;
+            padding-bottom: 20px;
+            font-family: Arial, sans-serif;
+        }
+        .login-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9998;
+        }
+        .login-box {
+            width: 400px;
+            background-color: rgb(0, 0, 0);
+            margin: auto;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 60px rgba(45, 140, 255, 1);
+        }
+        .login-title {
+            color: rgb(45, 140, 255);
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgb(45, 140, 255);
+        }
+        .register-tip {
+            color: rgb(45, 140, 255);
+            font-size: 14px;
+            text-align: center;
+            margin-bottom: 15px;
+            opacity: 0.8;
+        }
+        .login-input {
+            width: 100%;
+            padding: 12px 15px;
+            margin: 10px 0;
+            border: 1px solid rgb(45, 140, 255);
+            border-radius: 5px;
+            background-color: #444;
+            color: white;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        .login-input:focus {
+            outline: none;
+            border-color: rgb(45, 90, 255);
+            box-shadow: inset 0 0 8px rgba(45, 140, 255, 0.3);
+        }
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: rgb(45, 140, 255);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            margin-top: 15px;
+            box-shadow: 0 0 15px rgba(45, 140, 255, 0.5);
+        }
+        .login-btn:active {
+            background-color: rgb(45, 90, 255);
+            transform: scale(0.98);
+        }
+        .close-btn {
+            width: 30px;
+            height: 30px;
+            background-color: rgb(50, 50, 50);
+            text-align: center;
+            color: #999;
+            cursor: pointer;
+            font-size: 20px;
+            margin-bottom: 10px;
+            border-radius: 50%;
+            line-height: 30px;
+        }
+        .close-btn:hover {
+            color: rgb(45, 140, 255);
+            box-shadow: 0 0 10px rgba(45, 140, 255, 0.5);
+        }
+        .user-name {
+            font-size: 25px;
+            color: rgb(45, 140, 255);
+            margin-right: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .logout-btn {
+            font-size: 20px;
+            padding: 3px 15px;
+        }
+        .hello0{
+            width: 100%;
+            padding: 20px 0;
+            text-align: center;
+            color: rgb(45, 140, 255);
+            font-size: 30px;
+            text-shadow: 0 0 20px rgba(45, 140, 255, 0.6);
+        }
+        .tip-box {
+            position: fixed;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 10px 20px;
+            background-color: rgba(0,0,0,0.8);
+            color: rgb(45, 140, 255);
+            border-radius: 5px;
+            font-size: 18px;
+            z-index: 9999;
+            box-shadow: 0 0 15px rgba(45, 140, 255, 0.5);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .tip-box.show {
+            opacity: 1;
+        }
+        .function-area {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+        .function-title {
+            color: rgb(45, 140, 255);
+            font-size: 28px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(45, 140, 255, 0.5);
+        }
+        .function-item {
+            display: flex;
+            align-items: center;
+            min-height: 40px;
+            background-color: rgba(0,0,0,0.5);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            border: 5px solid rgba(45, 140, 255, 0.3);
+            box-shadow: 0 0 15px rgba(45, 140, 255, 0.2);
+        }
+        .url-input {
+            width: calc(100% - 120px);
+            padding: 10px 15px;
+            border: 1px solid rgb(45, 140, 255);
+            border-radius: 5px;
+            background-color: #444;
+            color: white;
+            font-size: 16px;
+            box-sizing: border-box;
+            margin-right: 10px;
+        }
+        .calc-input {
+            width: calc(100% - 120px);
+            padding: 10px 15px;
+            border: 1px solid rgb(45, 140, 255);
+            border-radius: 5px;
+            background-color: #444;
+            color: white;
+            font-size: 16px;
+            box-sizing: border-box;
+            margin-right: 10px;
+        }
+        .url-input:focus, .calc-input:focus {
+            outline: none;
+            border-color: rgb(45, 90, 255);
+            box-shadow: inset 0 0 8px rgba(45, 140, 255, 0.3);
+        }
+        .open-btn, .calc-btn {
+            padding: 10px 10px;
+            background-color: rgb(45, 140, 255);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(45, 140, 255, 0.4);
+        }
+        .open-btn:active, .calc-btn:active {
+            background-color: rgb(45, 90, 255);
+            transform: scale(0.98);
+        }
+        .function-item.disabled {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+        .disabled-tip {
+            color: rgb(45, 140, 255);
+            font-size: 16px;
+            text-align: center;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            opacity: 0.8;
+        }
+        .activation-info {
+            color: rgb(45, 140, 255);
+            font-size: 14px;
+            text-align: center;
+            margin-top: 10px;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+    <div class="h0">
+        <div style="color: rgb(45, 140, 255);font-size: 30px;">欢迎打开此网站</div>
+        <div style="margin-left: auto" id="user-area">
+            <button class="button0" onclick="createLoginUI()">激活码</button>
+        </div>
+    </div>
+    <div class="hello0" id="hello">请先输入激活码</div>
+    
+    <div class="function-area">
+        <h2 class="function-title">此网站功能:</h2>
+        <div>
+            <h3 class="function-title" style="font-size: 24px;">1.网站打开器</h3>
+            <div class="function-item" id="websiteOpener">
+                <input type="url" class="url-input" id="urlInput" placeholder="请输入网址（如：example.com）">
+                <button class="open-btn" onclick="openWebsite()">打开此网站</button>
+            </div>
+            <div class="disabled-tip" id="openerTip">请先输入激活码后使用此功能</div>
+        </div>
+        <div>
+            <h3 class="function-title" style="font-size: 24px;">2.计算器</h3>
+            <div class="function-item" id="calculator">
+                <input type="text" class="calc-input" id="calcInput" placeholder="请输入计算式（如：1+2*3）">
+                <button class="calc-btn" onclick="calculate()">计算</button>
+            </div>
+            <div class="disabled-tip" id="calcTip">请先输入激活码后使用此功能</div>
+        </div>
+        <div class="activation-info" id="activationInfo"></div>
+    </div>
+
+    <div class="tip-box" id="tipBox"></div>
+
+    <script>
+        // 激活码配置
+        const VALID_ACTIVE_CODE = "LdH440903201312210914565557";
+        const STORAGE_KEY = 'website_activation';
+        const ACTIVATION_EXPIRE_DAYS = 30; // 激活码有效期30天
+        
+        let isLoggedIn = false;
+
+        // 显示提示信息
+        function showTip(text) {
+            const tipBox = document.getElementById('tipBox');
+            tipBox.textContent = text;
+            tipBox.classList.add('show');
+            setTimeout(() => {
+                tipBox.classList.remove('show');
+            }, 2000);
+        }
+
+        // 创建激活码输入界面
+        function createLoginUI() {
+            if (document.querySelector('.login-modal')) {
+                return;
+            }
+            const modal = document.createElement('div');
+            modal.className = 'login-modal';
+            const loginBox = document.createElement('div');
+            loginBox.className = 'login-box';
+            loginBox.innerHTML = `
+                <div class="close-btn" onclick="this.parentElement.parentElement.remove()">×</div>
+                <div class="login-title">输入激活码</div>
+                <div class="register-tip">请输入指定的激活码</div>
+                <input type="text" class="login-input" id="activeCodeInput" placeholder="请输入激活码" onkeydown="if(event.key == 'Enter') checkActiveCode()">
+                <button class="login-btn" onclick="checkActiveCode()">验证激活码</button>
+            `;
+            modal.appendChild(loginBox);
+            document.body.appendChild(modal);
+        }
+
+        // 检查激活码
+        function checkActiveCode() {
+            const inputCode = document.getElementById('activeCodeInput').value.trim();
+            
+            if (!inputCode) {
+                showTip('请输入激活码！');
+                return;
+            }
+            
+            if (inputCode !== VALID_ACTIVE_CODE) {
+                showTip('激活码错误，请重新输入！');
+                return;
+            }
+            
+            // 保存激活状态到本地存储
+            const activationData = {
+                isActivated: true,
+                activationDate: new Date().toISOString(),
+                expiryDate: new Date(Date.now() + ACTIVATION_EXPIRE_DAYS * 24 * 60 * 60 * 1000).toISOString()
+            };
+            
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(activationData));
+            
+            const modal = document.querySelector('.login-modal');
+            if (modal) {
+                modal.remove();
+                showTip('激活码验证成功，欢迎使用！');
+            }
+
+            // 激活功能
+            activateFeatures();
+        }
+
+        // 激活功能
+        function activateFeatures() {
+            isLoggedIn = true;
+            const websiteOpener = document.getElementById('websiteOpener');
+            websiteOpener.classList.remove('disabled');
+            document.getElementById('openerTip').style.display = 'none';
+            
+            const calculator = document.getElementById('calculator');
+            calculator.classList.remove('disabled');
+            document.getElementById('calcTip').style.display = 'none';
+
+            // 更新用户界面
+            updateUserInterface();
+            
+            // 更新激活信息显示
+            updateActivationInfo();
+        }
+
+        // 更新用户界面
+        function updateUserInterface() {
+            const userArea = document.getElementById('user-area');
+            userArea.innerHTML = `
+                <div class="user-name">
+                    当前状态：已激活
+                    <button class="button0 logout-btn" onclick="logout()">退出激活</button>
+                </div>
+            `;
+            
+            const Hello = document.getElementById('hello');
+            Hello.innerHTML = '你好，已激活用户';
+        }
+
+        // 更新激活信息显示
+        function updateActivationInfo() {
+            const activationData = getActivationData();
+            if (activationData && activationData.isActivated) {
+                const expiryDate = new Date(activationData.expiryDate);
+                const daysLeft = Math.ceil((expiryDate - new Date()) / (1000 * 60 * 60 * 24));
+                
+                const activationInfo = document.getElementById('activationInfo');
+                if (daysLeft > 0) {
+                    activationInfo.innerHTML = `激活状态：有效 | 有效期剩余：${daysLeft}天`;
+                } else {
+                    activationInfo.innerHTML = `激活状态：已过期，请重新激活`;
+                    logout(); // 自动退出激活状态
+                }
+            }
+        }
+
+        // 获取激活数据
+        function getActivationData() {
+            try {
+                const data = localStorage.getItem(STORAGE_KEY);
+                return data ? JSON.parse(data) : null;
+            } catch (e) {
+                return null;
+            }
+        }
+
+        // 检查激活状态
+        function checkActivationStatus() {
+            const activationData = getActivationData();
+            
+            if (activationData && activationData.isActivated) {
+                // 检查是否过期
+                const expiryDate = new Date(activationData.expiryDate);
+                if (new Date() < expiryDate) {
+                    // 未过期，自动激活
+                    activateFeatures();
+                    return true;
+                } else {
+                    // 已过期，清除激活状态
+                    localStorage.removeItem(STORAGE_KEY);
+                    showTip('激活码已过期，请重新激活！');
+                    return false;
+                }
+            }
+            return false;
+        }
+
+        // 退出激活
+        function logout() {
+            localStorage.removeItem(STORAGE_KEY);
+            isLoggedIn = false;
+            
+            const websiteOpener = document.getElementById('websiteOpener');
+            websiteOpener.classList.add('disabled');
+            document.getElementById('openerTip').style.display = 'block';
+            
+            const calculator = document.getElementById('calculator');
+            calculator.classList.add('disabled');
+            document.getElementById('calcTip').style.display = 'block';
+
+            const userArea = document.getElementById('user-area');
+            userArea.innerHTML = `<button class="button0" onclick="createLoginUI()">激活码</button>`;
+            
+            const Hello = document.getElementById('hello');
+            Hello.innerHTML = '请先输入激活码';
+            
+            const activationInfo = document.getElementById('activationInfo');
+            activationInfo.innerHTML = '';
+            
+            showTip('已退出激活状态！');
+        }
+
+        // 网站打开器功能
+        function openWebsite() {
+            if (!isLoggedIn) {
+                showTip('请先输入激活码后使用此功能！');
+                createLoginUI();
+                return;
+            }
+
+            const url = document.getElementById('urlInput').value.trim();
+            if (!url) {
+                showTip('请输入有效的网址！');
+                return;
+            }
+            
+            try {
+                const fullUrl = url.startsWith('http') ? url : `https://${url}`;
+                const urlObj = new URL(fullUrl);
+                
+                if (!['http:', 'https:'].includes(urlObj.protocol)) {
+                    showTip('只支持HTTP和HTTPS协议！');
+                    return;
+                }
+                
+                window.open(urlObj.href, '_blank', 'noopener,noreferrer');
+                showTip('网站已在新标签页打开！');
+                document.getElementById('urlInput').value = '';
+            } catch (e) {
+                showTip('网址格式不正确，请检查！');
+            }
+        }
+
+        // 计算器功能（安全版本）
+        function calculate() {
+            if (!isLoggedIn) {
+                showTip('请先输入激活码后使用此功能！');
+                createLoginUI();
+                return;
+            }
+
+            const calcStr = document.getElementById('calcInput').value.trim();
+            if (!calcStr) {
+                showTip('请输入计算式！');
+                return;
+            }
+
+            try {
+                // 安全计算函数
+                function safeCalculate(expression) {
+                    // 只允许数字、基本运算符和括号
+                    const sanitized = expression.replace(/[^\d+\-*/().\s]/g, '');
+                    
+                    // 简单的验证
+                    if (!/^[\d+\-*/().\s]+$/.test(expression)) {
+                        throw new Error('包含非法字符');
+                    }
+                    
+                    // 使用Function构造器（比eval稍安全）
+                    try {
+                        const result = new Function('return ' + sanitized)();
+                        return result;
+                    } catch (e) {
+                        throw new Error('计算表达式错误');
+                    }
+                }
+                
+                const result = safeCalculate(calcStr);
+                showTip(`计算结果：${result}`);
+                document.getElementById('calcInput').value = '';
+            } catch (e) {
+                showTip('计算式格式错误，请检查！');
+            }
+        }
+
+        // 页面加载时初始化
+        window.onload = function() {
+            // 初始禁用所有功能
+            document.getElementById('websiteOpener').classList.add('disabled');
+            document.getElementById('calculator').classList.add('disabled');
+            
+            // 检查本地存储中的激活状态
+            const isActivated = checkActivationStatus();
+            
+            // 添加键盘快捷键
+            document.addEventListener('keydown', function(e) {
+                // Ctrl + L 打开激活码输入
+                if (e.ctrlKey && e.key === 'l') {
+                    e.preventDefault();
+                    createLoginUI();
+                }
+                // Esc 关闭模态框
+                if (e.key === 'Escape') {
+                    const modal = document.querySelector('.login-modal');
+                    if (modal) modal.remove();
+                }
+            });
+            
+            // 定期检查激活状态（每分钟检查一次）
+            setInterval(checkActivationStatus, 60000);
+        }
+    </script>
+</body>
+</html>
